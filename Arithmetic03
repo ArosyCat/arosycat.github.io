@@ -1,0 +1,49 @@
+package com.arosycat.test;
+
+/**
+ * 回文数
+ * 输入：x=121     输出：true  （即是一个回文数）
+ * 输入：x=-121    输出：false   （-121和121-不一样）
+ * 输入：x=10      输出：false   （10和01不一样）
+ * @author zehao
+ * @create 2021-09-01-9:23
+ */
+public class Arithmetic03 {
+
+    public static void main(String[] args) {
+        System.out.println(isPalindrome(123454321));//true
+        System.out.println(isPalindrome(123321));//true
+        System.out.println(isPalindrome(12));//false
+    }
+
+    /**
+     * 方法：反转一半数字
+     * 1）、所有负数都不可能回文
+     * 2）、所有个数是0的数字不可能是回文，因为最高位不等于0
+     * 时间复杂度：O(logN)
+     * 空间复杂度：O(1)
+     * @param x
+     * @return
+     */
+    public static boolean isPalindrome(int x) {
+        /*
+        首先排除特殊情况：
+        如上所述：当 X < 0时，x不是回文数
+        同样的，如果数字的最后一位数是0，则不会构成回文数
+         */
+        if (x < 0 || (x % 10 == 0 && x != 0)) {
+            return false;
+        }
+        int revertedNumber = 0;
+        while (x > revertedNumber) {
+            revertedNumber = revertedNumber * 10 + x % 10;
+            x = x / 10;
+        }
+        /*
+        当数字长度为奇数时，我们可以通过revertedNumber/10去除处于中位的数字，
+        例如：当输入为12321时，在while循环的末尾我们可以得到x=12,revertedNumber=123
+        由于处于中位的数字不影响回文（它总是与自己相等），所以可以直接对比12和12
+         */
+        return x == revertedNumber || x == revertedNumber / 10;
+    }
+}
