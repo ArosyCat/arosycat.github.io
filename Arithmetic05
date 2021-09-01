@@ -1,0 +1,82 @@
+package com.arosycat.test;
+
+/**
+ * 最长公共前缀
+ * 输入：strs = ["flower","flow","flight"]     输出："fl"
+ * 输入：strs = ["dog","cat","pig"]            输出：""
+ * @author zehao
+ * @create 2021-09-01-10:18
+ */
+public class Arithmetic05 {
+
+    public static void main(String[] args) {
+        String method1Res1 = longestCommonPrefix1(new String[]{"flower", "flow", "flight"});
+        System.out.println(method1Res1); //fl
+        String method1Res2 = longestCommonPrefix1(new String[]{"dog", "cat", "pig"});
+        System.out.println(method1Res2); //""
+        System.out.println("==============================================================");
+        String method2Res1 = longestCommonPrefix1(new String[]{"flower", "flow", "flight"});
+        System.out.println(method2Res1); //fl
+        String method2Res2 = longestCommonPrefix1(new String[]{"dog", "cat", "pig"});
+        System.out.println(method2Res2); //""
+    }
+
+    /**
+     * 法1：横向扫描
+     * 用LCP(S1...Sn)表示字符串S1...Sn的最长公共前缀
+     * 得到结论：LCP(S1...Sn) = LCP(LCP(LCP(S1,S2),S3),...)...
+     * 
+     * 时间复杂度：O(mn)
+     * 空间复杂度：O(1)
+     * @param strs
+     * @return
+     */
+    public static String longestCommonPrefix1(String[] strs){
+        if (strs == null || strs.length == 0) {
+            return "";
+        }
+        String prefix = strs[0];
+        for (int i = 1; i < strs.length; i++) {
+            prefix = longestCommonPrefix1(prefix, strs[i]);
+            if (prefix.length() == 0){
+                break;
+            }
+        }
+        return prefix;
+    }
+    public static String longestCommonPrefix1(String str1,String str2){
+        int len = Math.min(str1.length(),str2.length());
+        int index = 0;
+        while (index < len && str1.charAt(index) == str2.charAt(index)){
+            index++;
+        }
+        return str1.substring(0,index);
+    }
+
+    /**
+     * 法2：纵向扫描
+     * 纵向扫描时，从前往后遍历所有字符串的每一列，比较相同列上的
+     * 字符是否相同，如果相同则继续对下一列进行比较，如果不相同
+     * 则当前列不再属于公共前缀，当前列之前的部分为最长公共前缀
+     * 
+     * 时间复杂度：O(mn)
+     * 空间复杂度：O(1)
+     * @param strs
+     * @return
+     */
+    public static String longestCommonPrefix(String[] strs){
+        if (strs == null || strs.length == 0){
+            return "";
+        }
+        int length = strs[0].length();
+        int count = strs.length;
+        for (int i = 0; i < length; i++) {
+            for (int j = 1; j < count; j++) {
+                if (strs[0].charAt(i) != strs[count].charAt(i) || i == strs[j].length()){
+                    return strs[0].substring(0,i);
+                }
+            }
+        }
+        return strs[0]; //到达这一步说明全部相等，退出循环，直接返回比较的字符串
+    }
+}
