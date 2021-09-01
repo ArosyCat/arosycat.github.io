@@ -1,0 +1,68 @@
+package com.arosycat.test;
+
+/**
+ * 罗马数字转整数
+ * 罗马字符         数值          特殊情况
+ * I                1           1、I可以放在V(5)和X(10)的左边来表示4和9
+ * V                5
+ * X                10
+ * L                50          2、X可以放在L(50)和C(100)的左边来表示40和90
+ * C                100
+ * D                500
+ * M                1000        3、C可以放在D(500)和M(1000)的左边来表示400和900
+ * <p>
+ * 例：输入："MCMXCIV"   输出：1994
+ *
+ * @author zehao
+ * @create 2021-09-01-9:56
+ */
+public class Arithmetic04 {
+
+    public static void main(String[] args) {
+        System.out.println(romanToInt("MCMXCIV"));//1994
+    }
+
+    /**
+     * 算法：
+     * 1）、把一个小值放在大值的左边，就是做减法，否则为加法
+     * 2）、最后的一个值永远为正
+     * @param s
+     * @return
+     */
+    public static int romanToInt(String s) {
+        int sum = 0;
+        int preNum = getValue(s.charAt(0));
+        for (int i = 1; i < s.length(); i++) {
+            int num = getValue(s.charAt(i));
+            if (preNum > num){
+                sum += preNum;
+            }else {
+                sum -= preNum;
+            }
+            preNum = num;
+        }
+        sum += preNum;      //最后一位永远是正的，不要忘记加上
+        return sum;
+    }
+
+    public static int getValue(char ch) {
+        switch (ch) {
+            case 'I':
+                return 1;
+            case 'V':
+                return 5;
+            case 'X':
+                return 10;
+            case 'L':
+                return 50;
+            case 'C':
+                return 100;
+            case 'D':
+                return 500;
+            case 'M':
+                return 1000;
+        }
+        return 0;
+    }
+
+}
