@@ -1,0 +1,57 @@
+/**
+ * 算法：两数之和
+ * @author zehao
+ * @create 2021-09-01-8:32
+ */
+public class Arithmetic01 {
+    
+    public static void main(String[] args) {
+        int[] nums = new int[]{2,7,11,15};
+        int[] res = Arithmetic01.twoSum1(nums, 26);
+        System.out.println("[" + res[0] + "," + res[1] + "]"); //[2,3]
+        System.out.println("=================================");
+        int[] nums1 = new int[]{2,7,11,15};
+        int[] res1 = Arithmetic01.twoSum2(nums1, 9);
+        System.out.println("[" + res1[0] + "," + res1[1] + "]"); //[0,1]
+    }
+
+    /**
+     * 法1：暴力枚举
+     * 时间复杂度：O(N²)
+     * 空间复杂度：O(1)
+     * @param nums  
+     * @param target
+     * @return
+     */
+    public static int[] twoSum1(int[] nums,int target){
+        int n = nums.length;
+        for (int i = 0; i < n; i++) {
+            for (int j = i + 1; j < n; j++) {
+                if (target == nums[i] + nums[j]){
+                    return new int[]{i,j};
+                }
+            }
+        }
+        return new int[0];
+    }
+
+    /**
+     * 法2：哈希表
+     * 时间复杂度：O(N)
+     * 空间复杂度：O(N)
+     * @param nums
+     * @param target
+     * @return
+     */
+    public static int[] twoSum2(int[] nums,int target){
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            if (map.containsKey(target - nums[i])){
+                return new int[]{map.get(target - nums[i]),i};
+            }
+            map.put(nums[i],i);
+        }
+        return new int[0];
+    }
+
+}
