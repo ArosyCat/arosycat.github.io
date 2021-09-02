@@ -1,0 +1,36 @@
+/**
+* 快速排序
+* @author ArosyCat
+*/
+public class QuickSort{
+
+    public static void main(String[] args){
+        int[] ints = {70, 5, 7, 11, 23, 32, 14, 6};
+        quickSort(ints,0,7);
+        System.out.println(Arrays.toString(ints)); //[5, 6, 7, 11, 14, 23, 32, 70]
+    }
+
+    public static void quickSort(int[] arr,int left,int right){
+        if(left < right){
+            int m = findIndex(arr,left,right);
+            quickSort(arr,left,m - 1);
+            quickSort(arr,m + 1,right);
+        }
+    }
+    
+    private static int findIndex(int[] arr,int left,int right){
+        int flag = arr[left];
+        while(left < right){
+            while(flag < arr[right] && left < right)
+                right--;
+            arr[left] = arr[right];
+            while(flag > arr[left] && left < right)
+                left++;
+            arr[right] = arr[left];
+        }
+        arr[left] = flag;
+        return left;
+    }
+}
+
+
