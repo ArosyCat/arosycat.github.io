@@ -1,5 +1,10 @@
 /**
 * 归并排序
+* 最好时间复杂度：O(NlogN)
+* 平均时间复杂度：O(NlogN)
+* 最坏时间复杂度：O(NlogN)
+* 空间复杂度：O(N)
+* 稳定
 * @author ArosyCat
 */
 public class MergeSort{
